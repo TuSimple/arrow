@@ -1,0 +1,18 @@
+name: arrow
+version: 0.15.0
+maintainer: Haoran Wang <haoran.wang@tusimple.ai>
+
+build: |
+  [[ -n $CLEANUP ]] && rm -f cpp/build && rm -f python/build
+  mkdir -p cpp/build
+  cd cpp/build
+  #cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE -DBUILD_SHARED_LIBS=ON -DARROW_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python2 ..
+  cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE -DBUILD_SHARED_LIBS=ON -DARROW_PYTHON=ON ..
+  make -j8
+  make install
+
+  cd ../../python
+  pip install -r requirements.txt
+  export ARROW_HOME=$INSTALL_DIR
+  python setup.py build
+  install_python pyarrow

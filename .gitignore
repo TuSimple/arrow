@@ -71,3 +71,6 @@ site/
 **/*.Rcheck/
 **/.Rhistory
 .Rproj.user
+
+# TSPKG
+.release
